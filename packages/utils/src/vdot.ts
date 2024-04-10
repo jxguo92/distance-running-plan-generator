@@ -59,36 +59,35 @@ export const Formula = {
     return time / scale;
   },
 
-  getMarathonPace: function(VDOT, trainingDistance) {
-    return trainingDistance / Formula._getMarathonVelocity(VDOT);
+  getMarathonPace: function(VDOT) {
+    return 1000 / Formula._getMarathonVelocity(VDOT);
   },
 
-  // getJogPace: function(vdot, distance) {
-  //   if (vdot > 50.5) {
-  //     const pace = 9.0 * Conversion.toMiles(distance);
-  //     return pace;
-  //   }
-  //
-  //   return this.getEasyPace(vdot, distance, true);
-  // },
+  getJogPace: function(vdot) {
+    if (vdot > 50.5) {
+      const pace = 9.0;
+      return pace;
+    }
 
-  getWalkPace: function(distance) {
-    const pace = 12 * (1000 / distance);
-    return pace;
+    return this.getEasyPace(vdot, true);
   },
 
-  getEasyPace: function(vdot, distance, slowerPace) {
+  getWalkPace: function() {
+    return 12
+  },
+
+  getEasyPace: function(vdot, slowerPace) {
     if (this._isSlowVdot(vdot)) {
       vdot = this._getSRVDOT(vdot);
     }
 
     var percentage = slowerPace ? .62 : .70;
-    return this._getCustomEffortPace(vdot, distance, percentage);
+    return this._getCustomEffortPace(vdot, percentage);
   },
 
-  getEasyPaceRange: function(vdot, distance, unit) {
-    const slower = this.getEasyPace(vdot, distance, true);
-    const faster = this.getEasyPace(vdot, distance, false);
+  getEasyPaceRange: function(vdot, unit) {
+    const slower = this.getEasyPace(vdot, true);
+    const faster = this.getEasyPace(vdot, false);
 
     return {
       slow: slower,
@@ -97,33 +96,33 @@ export const Formula = {
     };
   },
 
-  getThresholdPace: function(vdot, distance) {
+  getThresholdPace: function(vdot) {
     if (this._isSlowVdot(vdot)) {
       var srvdot = this._getSRVDOT(vdot);
       vdot = (srvdot + parseFloat(vdot)) / 2;
     }
 
-    return this._getCustomEffortPace(vdot, distance, .88);
+    return this._getCustomEffortPace(vdot, .88);
   },
 
-  getIntervalPace: function(vdot, distance) {
+  getIntervalPace: function(vdot) {
     if (this._isSlowVdot(vdot)) {
       vdot = this._getSRVDOT(vdot);
     }
 
-    return this._getCustomEffortPace(vdot, distance, .975);
+    return this._getCustomEffortPace(vdot, .975);
   },
 
-  getRepetitionPace: function(vdot, distance) {
+  getRepetitionPace: function(vdot, distance = 1000) {
     const per400FasterBy = 6.0;
     const divisor = (distance / 400) * (per400FasterBy / 60);
 
-    const pace = this.getIntervalPace(vdot, distance);
+    const pace = this.getIntervalPace(vdot);
     return pace - divisor;
   },
 
 
-  getFastRepsPace: function(vdot, distance) {
+  getFastRepsPace: function(vdot, distance = 1000) {
     var per200FasterBy = 4.0;
     var divisor = (distance / 200) * (per200FasterBy / 60);
     var pace = this.getRepetitionPace(vdot, distance);
@@ -144,7 +143,7 @@ export const Formula = {
   //     }
   //
   //     const paceDistance = FormulaHelpers.getPaceDistanceForUnit(paceUnit);
-  //     return this._getCustomEffortPace(vdot, paceDistance, percentage / 100);
+  //     return this._getCustomEffortPace(vdot, percentage / 100);
   //   }
   //
   //   return this._getCustomDistancePace(vdot, distanceMeters, paceUnit);
@@ -158,10 +157,10 @@ export const Formula = {
     return (vdot * 2 / 3) + 13;
   },
 
-  _getCustomEffortPace: function(vdot, distance, percentage) {
+  _getCustomEffortPace: function(vdot, percentage) {
     var O = vdot * percentage;
     var V = Formula._getPaceVelocity(O);
-    return distance / V;
+    return 1000 / V;
   },
 
   // _getCustomDistancePace: function(vdot, meters, paceUnit) {
