@@ -43,3 +43,11 @@ export const getEquivalentRacePaces = (seconds: number, meters: number): RacePac
   const vdot = getVDOT(seconds, meters)
   return getEquivalentRacePacesFromVdot(vdot)
 }
+
+export const getEquivalentRacePace = (vdot: number, type: RaceType): Time => {
+  const distance = RACE_DISTANCES[type]
+  const timeInMinutes = Formula.getPredictedRaceTime(vdot, distance)
+  const timeInSeconds = minutesToSeconds(timeInMinutes)
+  const speed = distance / timeInSeconds
+  return speedToPace(speed)
+}
