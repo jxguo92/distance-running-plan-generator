@@ -1,1 +1,2 @@
-export { GeneratorOptions, generateTrainingPlan } from './generator'
+export { generateTrainingPlan } from './generator'
+export { GeneratorOptions } from './types'
