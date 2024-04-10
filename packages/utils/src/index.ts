@@ -1,4 +1,6 @@
-interface Time {
+export { Formula } from './vdot'
+
+export interface Time {
   hours: number
   minutes: number
   seconds: number
