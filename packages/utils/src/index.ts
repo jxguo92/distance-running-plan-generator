@@ -14,7 +14,7 @@ export const secondsToTime = (seconds: number): Time => {
   return {
     hours: Math.floor(seconds / (SECONDS_IN_MINUTE * MINUTES_IN_HOUR)),
     minutes: Math.floor(seconds / SECONDS_IN_MINUTE) % MINUTES_IN_HOUR,
-    seconds: Math.floor(seconds % (SECONDS_IN_MINUTE * MINUTES_IN_HOUR)),
+    seconds: Math.floor(seconds % SECONDS_IN_MINUTE),
   }
 }
 export const timeToSeconds = ({ hours, minutes, seconds }: Time): number => {
