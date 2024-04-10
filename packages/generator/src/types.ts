@@ -27,3 +27,36 @@ export interface GeneratorOptions {
   // TODO
   customization?: Customization
 }
+
+type TrainingPeriodType = 'introductory' | 'aerobic' | 'speed' | 'race'
+export type Duration = {
+  type: 'distance'
+  distance: number
+} | {
+  type: 'time'
+  time: number
+}
+type StepType = 'warmup' | 'cooldown' | 'training' | 'recovery'
+export interface TrainingWorkoutStep {
+  type: StepType
+  pace: Time
+  duration: Duration
+}
+export interface TrainingWorkout {
+  workoutType: WorkoutType
+  steps: TrainingWorkoutStep[]
+}
+export interface TrainingDay {
+  workouts: TrainingWorkout[]
+}
+export interface TrainingWeek {
+  days: [TrainingDay, TrainingDay, TrainingDay, TrainingDay, TrainingDay, TrainingDay, TrainingDay]
+}
+export interface TrainingPeriod {
+  type: TrainingPeriodType
+  weeks: TrainingWeek[]
+}
+export interface TrainingPlan {
+  option: GeneratorOptions
+  periods: TrainingPeriod[]
+}
