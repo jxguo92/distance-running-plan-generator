@@ -16,3 +16,6 @@ export const RACE_DISTANCES: Record<RaceType, number> = {
   '3k': 3000,
   '1500': 1500,
 }
+
+export const WORKOUT_TYPES = ['easy', 'marathon', 'half', 'lactate', 'speed', 'vo2max'] as const
+export type WorkoutType = ArrayElementType<typeof WORKOUT_TYPES>
