@@ -27,11 +27,11 @@ export const metersToKilometer = (meters: number): number => meters / METERS_IN_
 export const metersToMILE = (meters: number): number => meters / METERS_IN_MILE
 
 // speed is always in m/s
-const speedToPace = (speed: number): Time => {
+export const speedToPace = (speed: number): Time => {
   const secondsPerKilometer = METERS_IN_KILOMETER / speed
   return secondsToTime(secondsPerKilometer)
 }
-const paceToSpeed = (pace: Time): number => {
+export const paceToSpeed = (pace: Time): number => {
   const secondsPerKilometer = timeToSeconds(pace)
   return METERS_IN_KILOMETER / secondsPerKilometer
 }
