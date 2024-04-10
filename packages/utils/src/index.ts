@@ -8,6 +8,7 @@ export interface Time {
 
 const SECONDS_IN_MINUTE = 60
 const MINUTES_IN_HOUR = 60
+export const secondsToMinutes = (seconds: number): number => seconds / SECONDS_IN_MINUTE
 export const secondsToTime = (seconds: number): Time => {
   return {
     hours: Math.floor(seconds / (SECONDS_IN_MINUTE * MINUTES_IN_HOUR)),
