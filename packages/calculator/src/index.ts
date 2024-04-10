@@ -42,3 +42,9 @@ export const getEquivalentRacePace = (vdot: number, type: RaceType): Time => {
   const speed = distance / timeInSeconds
   return speedToPace(speed)
 }
+
+export const getLactateThresholdPace = (vdot: number): Time => {
+  const timeInMinutes = Formula.getThresholdPace(vdot)
+  const timeInSeconds = minutesToSeconds(timeInMinutes)
+  return secondsToTime(timeInSeconds)
+}
