@@ -1,11 +1,11 @@
 import {
   Formula,
-  metersToKilometer, minutesToSeconds,
+  minutesToSeconds,
   RACE_DISTANCES,
   RACE_TYPES,
   RaceType,
   secondsToMinutes,
-  secondsToTime,
+  secondsToTime, speedToPace,
   Time
 } from 'utils/index'
 
@@ -27,3 +27,19 @@ export const getEquivalentRaceTimes = (seconds: number, meters: number): RaceTim
   return getEquivalentRaceTimesFromVdot(vdot)
 }
 
+type RacePaces = Record<RaceType, Time>
+export const getEquivalentRacePacesFromVdot = (vdot: number): RacePaces => {
+  return Object.fromEntries(RACE_TYPES
+    .map(type => {
+      const distance = RACE_DISTANCES[type]
+      const timeInMinutes = Formula.getPredictedRaceTime(vdot, distance)
+      const timeInSeconds = minutesToSeconds(timeInMinutes)
+      const speed = distance / timeInSeconds
+      const pace = speedToPace(speed)
+      return [type, pace]
+    })) as RaceTimes
+}
+export const getEquivalentRacePaces = (seconds: number, meters: number): RacePaces => {
+  const vdot = getVDOT(seconds, meters)
+  return getEquivalentRacePacesFromVdot(vdot)
+}
